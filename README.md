@@ -4,9 +4,9 @@ Many times when [Apache HBase](hbase.apache.org) is used for storing counters th
 
 [Cask Data Application Platform](cdap.io) (CDAP) provides a special read-less [incrementWrite operation on a Table dataset](http://docs.cask.co/cdap/3.0.0/en/developers-manual/building-blocks/datasets/table.html#increment) that stores data in HBase. It helps to improve performance and in many use-cases that depend heavily on counting, such as [OLAP Cube](http://docs.cask.co/cdap/3.0.0/en/developers-manual/building-blocks/datasets/cube.html).
 
-This tiny project provides an example of how you can **use the read-less increments in any HBase (0.98+) application** (no CDAP is required). In that case you will miss a very cool support for [transactions](http://docs.cask.co/cdap/3.0.0/en/developers-manual/building-blocks/transaction-system.html?highlight=transactions) that comes with CDAP datasets, which may or may not be fine in your use-case.
+This tiny project provides an example of how you can **use the read-less increments in any HBase application** (no CDAP is required). In that case you will miss a very cool support for [transactions](http://docs.cask.co/cdap/3.0.0/en/developers-manual/building-blocks/transaction-system.html?highlight=transactions) that comes with CDAP datasets, which may or may not be fine in your use-case.
 
-In case of any questions or issues, please start discussion in [this mailing list](https://groups.google.com/forum/#!forum/cdap-user).
+Currently the project is configured to use HBase 0.98+, but you can configure it to use 0.96 as well. In case of any questions or issues, please start discussion in [this mailing list](https://groups.google.com/forum/#!forum/cdap-user).
 
 # How-to
 
