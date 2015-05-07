@@ -1,6 +1,6 @@
 # Efficient Read-less Increments in HBase
 
-Many times when [Apache HBase](hbase.apache.org) is used for counting the result of Increment operation performed is ignored. Yet, the HBase does all the necessary job to compute and return the result value which reduces efficiency by performing redundant read operations.
+Many times when [Apache HBase](hbase.apache.org) is used for storing counters the result of an Increment operation that is performed to update them is ignored. Yet, the HBase does all the necessary job to compute and return the result value which reduces efficiency by performing redundant read operations.
 
 [Cask Data Application Platform](cdap.io) (CDAP) provides a special read-less [incrementWrite operation on a Table dataset](http://docs.cask.co/cdap/3.0.0/en/developers-manual/building-blocks/datasets/table.html#increment) that stores data in HBase. It helps to improve performance and in many use-cases that depend heavily on counting, such as [OLAP Cube](http://docs.cask.co/cdap/3.0.0/en/developers-manual/building-blocks/datasets/cube.html).
 
