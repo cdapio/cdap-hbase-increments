@@ -30,7 +30,7 @@ $ hbase shell
 > alter 'mytable', 'coprocessor' => 'hdfs:///tmp/cdap-hbase-increments-1.0.0-SNAPSHOT.jar |co.cask.cdap.data2.increment.hbase98.IncrementHandler|'
 ```
 
-Note that we use special property to tell the Coprocessor to turn off transactions support, which you want to do unless you use [Tephra](tephra.io) (transactions for HBase).
+Note that we use special property to tell the Coprocessor to turn off transactions support, which you want to do unless you use [Tephra](tephra.io) (transactions for HBase). Also, readless increments require setting versions number to keep to "unlimited". While the Coprocessor we configured takes care of merging puts for readless increments, keeping unlimited versions for any other cases may affect other operations performance and housekeeping. Be sure to set the configuration only on the column families you use to keep counters updated with read-less incremetns.
 
 ## Read-less increments using HTable
 
@@ -75,40 +75,47 @@ Current value: 10000, retrieved in: 19 ms.
 
 **HTable Increments**
 
+(on table with default configuration created with ``create 'mytable2', {NAME => 'd'}``)
+
 ```
-$ java -cp `hbase classpath`:cdap-hbase-increments-1.0.0-SNAPSHOT.jar co.cask.cdap.hbase.increments.ExampleClient mytable row1 d mycounter2 10000 INCREMENT
+$ java -cp `hbase classpath`:cdap-hbase-increments-1.0.0-SNAPSHOT.jar co.cask.cdap.hbase.increments.ExampleClient mytable2 row1 d mycounter2 10000 INCREMENT
 
 Starting 10000 INCREMENTs...
-Completed 1000 operations in 2543 ms.
-Completed 2000 operations in 4665 ms.
-Completed 3000 operations in 6576 ms.
-Completed 4000 operations in 8307 ms.
-Completed 5000 operations in 9920 ms.
-Completed 6000 operations in 11548 ms.
-Completed 7000 operations in 12994 ms.
-Completed 8000 operations in 14476 ms.
-Completed 9000 operations in 16028 ms.
-Completed 10000 operations in 17504 ms.
-Current value: 10000, retrieved in: 320 ms.
+Completed 1000 operations in 2575 ms.
+Completed 2000 operations in 4702 ms.
+Completed 3000 operations in 6619 ms.
+Completed 4000 operations in 7876 ms.
+Completed 5000 operations in 9299 ms.
+Completed 6000 operations in 10783 ms.
+Completed 7000 operations in 12205 ms.
+Completed 8000 operations in 13627 ms.
+Completed 9000 operations in 15119 ms.
+Completed 10000 operations in 16771 ms.
+Current value: 10000, retrieved in: 5 ms.
 ```
 
 **HTable Puts** (just for comparison)
 
 ```
-$ java -cp `hbase classpath`:cdap-hbase-increments-1.0.0-SNAPSHOT.jar co.cask.cdap.hbase.increments.ExampleClient mytable row1 d mycounter3 10000 PUT
+$ java -cp `hbase classpath`:cdap-hbase-increments-1.0.0-SNAPSHOT.jar co.cask.cdap.hbase.increments.ExampleClient mytable2 row1 d mycounter3 10000 PUT
 
 Starting 10000 PUTs...
-Completed 1000 operations in 42 ms.
+Completed 1000 operations in 43 ms.
 Completed 2000 operations in 73 ms.
-Completed 3000 operations in 101 ms.
-Completed 4000 operations in 125 ms.
-Completed 5000 operations in 460 ms.
-Completed 6000 operations in 476 ms.
-Completed 7000 operations in 486 ms.
-Completed 8000 operations in 496 ms.
-Completed 9000 operations in 506 ms.
-Completed 10000 operations in 1302 ms.
-Current value: 1, retrieved in: 242 ms.
+Completed 3000 operations in 97 ms.
+Completed 4000 operations in 118 ms.
+Completed 5000 operations in 601 ms.
+Completed 6000 operations in 630 ms.
+Completed 7000 operations in 648 ms.
+Completed 8000 operations in 666 ms.
+Completed 9000 operations in 684 ms.
+Completed 10000 operations in 1779 ms.
+Current value: 1, retrieved in: 5 ms.
 ```
 
-Again, you should not take numbers for granted, but you cannot not notice that readless increments are much faster than normal increments and on par with simple puts (which they almost are).
+Again, you should not take numbers for granted, but you cannot not notice couple things:
+* readless increments are much faster than normal increments and 
+* on par with simple puts (which they almost are)
+* reading is slower for read-less increments case
+
+The last observation is expected, since at read the Coprocessor needs to merge many appended Puts. But it won't go out of the limits: merges are performed and stored automatically on memstore flushes and compactions.
