@@ -1,8 +1,8 @@
 # Efficient Read-less Increments in HBase
 
-Many times when [Apache HBase](hbase.apache.org) is used for storing counters the result of an Increment operation that is performed to update them is ignored. Yet, the HBase does all the necessary job to compute and return the result value which reduces efficiency by performing redundant read operations.
+Many times when [Apache HBase](http://hbase.apache.org) is used for storing counters the result of an Increment operation that is performed to update them is ignored. Yet, the HBase does all the necessary job to compute and return the result value which reduces efficiency by performing redundant read operations.
 
-[Cask Data Application Platform](cdap.io) (CDAP) provides a special read-less [incrementWrite operation on a Table dataset](http://docs.cask.co/cdap/3.0.0/en/developers-manual/building-blocks/datasets/table.html#increment) that stores data in HBase. It helps to improve performance and in many use-cases that depend heavily on counting, such as [OLAP Cube](http://docs.cask.co/cdap/3.0.0/en/developers-manual/building-blocks/datasets/cube.html).
+[Cask Data Application Platform](http://cdap.io) (CDAP) provides a special read-less [incrementWrite operation on a Table dataset](http://docs.cask.co/cdap/3.0.0/en/developers-manual/building-blocks/datasets/table.html#increment) that stores data in HBase. It helps to improve performance and in many use-cases that depend heavily on counting, such as [OLAP Cube](http://docs.cask.co/cdap/3.0.0/en/developers-manual/building-blocks/datasets/cube.html).
 
 This tiny project provides an example of how you can **use the read-less increments in any HBase application** (no CDAP is required). In that case you will miss a very cool support for [transactions](http://docs.cask.co/cdap/3.0.0/en/developers-manual/building-blocks/transaction-system.html?highlight=transactions) that comes with CDAP datasets, which may or may not be fine in your use-case.
 
@@ -32,7 +32,7 @@ $ hbase shell
 > alter 'mytable', 'coprocessor' => 'hdfs:///tmp/cdap-hbase-increments-1.0.0-SNAPSHOT.jar |co.cask.cdap.data2.increment.hbase98.IncrementHandler|'
 ```
 
-Note that we use special property to tell the Coprocessor to turn off transactions support, which you want to do unless you use [Tephra](tephra.io) (transactions for HBase). Also, readless increments require setting versions number to keep to "unlimited". While the Coprocessor we configured takes care of merging puts for readless increments, keeping unlimited versions for any other cases may affect other operations performance and housekeeping. Be sure to set the configuration only on the column families you use to keep counters updated with read-less incremetns.
+Note that we use special property to tell the Coprocessor to turn off transactions support, which you want to do unless you use [Tephra](http://tephra.io) (transactions for HBase). Also, readless increments require setting versions number to keep to "unlimited". While the Coprocessor we configured takes care of merging puts for readless increments, keeping unlimited versions for any other cases may affect other operations performance and housekeeping. Be sure to set the configuration only on the column families you use to keep counters updated with read-less incremetns.
 
 ## Read-less increments using HTable
 
