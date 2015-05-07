@@ -73,7 +73,7 @@ Completed 10000 operations in 1993 ms.
 Current value: 10000, retrieved in: 19 ms.
 ```
 
-**Native increments**
+**HTable Increments**
 
 ```
 $ java -cp `hbase classpath`:cdap-hbase-increments-1.0.0-SNAPSHOT.jar co.cask.cdap.hbase.increments.ExampleClient mytable row1 d mycounter2 10000 INCREMENT
@@ -92,7 +92,7 @@ Completed 10000 operations in 17504 ms.
 Current value: 10000, retrieved in: 320 ms.
 ```
 
-**Puts** (just for comparison)
+**HTable Puts** (just for comparison)
 
 ```
 $ java -cp `hbase classpath`:cdap-hbase-increments-1.0.0-SNAPSHOT.jar co.cask.cdap.hbase.increments.ExampleClient mytable row1 d mycounter3 10000 PUT
