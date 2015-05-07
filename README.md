@@ -38,7 +38,7 @@ To perform a readless-increment you need to issue a Put with special attribute t
 
 ``` java
   Put p = new Put(row);
-  p.add(family, qualifier, Bytes.toBytes(incrementBy));
+  p.add(family, qualifier, Bytes.toBytes(1L));
   p.setAttribute(HBaseTable.DELTA_WRITE, EMPTY_BYTES);
   hTable.put(p);
 ```
