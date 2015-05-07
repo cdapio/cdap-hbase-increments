@@ -6,6 +6,8 @@ Many times when [Apache HBase](hbase.apache.org) is used for storing counters th
 
 This tiny project provides an example of how you can use a read-less feature implemented in CDAP in any application that deals with HBase (0.98+) directly. In that case you will miss a very cool support for [transactions](http://docs.cask.co/cdap/3.0.0/en/developers-manual/building-blocks/transaction-system.html?highlight=transactions) that comes with CDAP datasets, which may or may not be fine in your use-case.
 
+In case of any questions or issues, please start discussion in [this mailing list](https://groups.google.com/forum/#!forum/cdap-user).
+
 # How-to
 
 ## Configure the HBase table
