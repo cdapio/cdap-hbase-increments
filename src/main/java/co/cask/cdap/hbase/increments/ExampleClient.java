@@ -52,6 +52,7 @@ public class ExampleClient {
 
     Configuration conf = HBaseConfiguration.create();
     HTable table = new HTable(conf, tableName);
+    table.setAutoFlush(false, false);
 
     System.out.println("Starting " + increments + " " + opType + "s...");
     long start = System.currentTimeMillis();
@@ -61,6 +62,7 @@ public class ExampleClient {
         printProgress(i, start);
       }
     }
+    table.flushCommits();
     printProgress(increments, start);
 
     start = System.currentTimeMillis();
