@@ -54,7 +54,7 @@ This tiny project comes with an example client that can perform readless increme
 <table-name> <row> <column-family-name> <column-name> <increments-count> <INCREMENT|INCREMENT_WRITE|PUT>
 ```
 
-Blow are examples of running different operations. Please do not rely on absolute numbers wrt latencies as it was run on small cluster and only few operations performed, even though the difference is good looking even here. Note: the program was run on one of the nodes of HBase cluster, so hbase-site.xml and all HBase jars needed for client are added by inclding HBase classpath (you configuration may vary).
+Below are examples of running different operations. Please do not rely on absolute numbers with respect to latencies as it was run on a small cluster and with only a few operations performed, even though the difference is good looking even here. Note: the program was run on one of the nodes of HBase cluster, so hbase-site.xml and all HBase jars needed for client are added by inclding HBase classpath (your configuration may vary).
 
 **Read-less increments**
 
