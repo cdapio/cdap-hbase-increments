@@ -37,6 +37,7 @@ Read-less Increments Using HTable
 To perform a readless-increment you need to issue a Put with a special attribute that is recognized by the configured Coprocessor:
 
 .. code:: java
+
   Put p = new Put(row);
   p.add(family, qualifier, Bytes.toBytes(1L));
   p.setAttribute(HBaseTable.DELTA_WRITE, EMPTY_BYTES);
@@ -44,7 +45,8 @@ To perform a readless-increment you need to issue a Put with a special attribute
 
 That's all you need to do in your code. Reading the counter value back can be done with ordinary Get or Scan.
 
-# Run it!
+Run it!
+=======
 
 This tiny project comes with an example client that can perform readless increments, normal increments, or put operations. The ``main()`` method of ``ExampleClient`` accepts the following params::
 
