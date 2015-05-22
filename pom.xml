@@ -27,7 +27,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <cdap.version>3.0.0-SNAPSHOT</cdap.version>
+    <cdap.version>3.0.0</cdap.version>
     <slf4j.version>1.7.5</slf4j.version>
     <guava.version>13.0.1</guava.version>
     <hbase98.version>0.98.6.1-hadoop2</hbase98.version>
